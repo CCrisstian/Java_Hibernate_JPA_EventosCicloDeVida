@@ -8,3 +8,12 @@
 - `@PostUpdate`: Se ejecuta después de que la entidad ha sido actualizada. Se usa para acciones posteriores al cambio, como el registro de auditoría.
 - `@PreRemove`: Se ejecuta antes de que la entidad se elimine de la base de datos. Ideal para verificar condiciones antes de la eliminación.
 - `@PostRemove`: Se ejecuta después de que la entidad ha sido eliminada. Sirve para tareas de limpieza o actualización de registros asociados.
+
+<h2>Anotaciones @Embeddable y @Embedded</h2>
+<p>Las anotaciones @Embeddable y @Embedded en Hibernate (y JPA en general) se utilizan para trabajar con objetos embebidos en entidades, lo que permite modelar clases que no representan entidades independientes, sino que forman parte de otra entidad principal. Esto es útil para evitar la repetición de atributos y para organizar mejor el código.</p>
+
+- `@Embeddable`
+La anotación `@Embeddable` se aplica a una clase que se va a utilizar como un componente embebido en una entidad. Indica que la clase puede ser "embebida" en otra entidad y que sus atributos se mapearán en la misma tabla que la entidad contenedora. Es una forma de agrupar atributos relacionados en una sola clase.
+
+- `@Embedded`
+La anotación `@Embedded` se usa en la clase entidad para indicar que un atributo es un objeto de una clase `@Embeddable`. Los atributos de la clase embebida se mapearán como columnas de la misma tabla que la entidad principal.
