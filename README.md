@@ -15,5 +15,30 @@
 - `@Embeddable`
 se aplica a una clase que se va a utilizar como un componente embebido en una entidad. Indica que la clase puede ser "embebida" en otra entidad y que sus atributos se mapearán en la misma tabla que la entidad contenedora. Es una forma de agrupar atributos relacionados en una sola clase.
 
+```java
+@Embeddable
+public class Direccion {
+    private String calle;
+    private String ciudad;
+    private String codigoPostal;
+
+    // Getters y setters
+}
+```
+
 - `@Embedded`
 se usa en la clase entidad para indicar que un atributo es un objeto de una clase `@Embeddable`. Los atributos de la clase embebida se mapearán como columnas de la misma tabla que la entidad principal.
+
+```java
+@Entity
+public class Persona {
+    @Id
+    private Long id;
+    private String nombre;
+
+    @Embedded
+    private Direccion direccion; // La clase Direccion es @Embeddable
+
+    // Getters y setters
+}
+```
