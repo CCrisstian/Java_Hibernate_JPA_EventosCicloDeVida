@@ -2,6 +2,8 @@ package org.CCristian.hibernateapp.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -16,6 +18,8 @@ public class Cliente {
     @Column(name = "forma_pago")
     private String formaPago;
 
+    @Embedded
+    private Auditoria audit = new Auditoria();
 
     public Cliente() {
     }
@@ -66,10 +70,14 @@ public class Cliente {
 
     @Override
     public String toString() {
+        LocalDateTime creado = this.audit != null? audit.getCreadoEn() : null;
+        LocalDateTime editado = this.audit != null? audit.getEditadoEn() : null;
         return "---------------------------------------------------------------------------" +
                 "\nid= " + id +
                 ", nombre= " + nombre +
                 ", apellido= " + apellido +
-                ", formapago= " + formaPago;
+                ", formaPago= " + formaPago +
+                ", creadoEn= " + creado +
+                ", editadoEn= " + editado;
     }
 }
