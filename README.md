@@ -42,3 +42,56 @@ public class Persona {
     // Getters y setters
 }
 ```
+
+<h1 align="center">Generación automática de tablas </h1>
+<p>La propiedad jakarta.persistence.schema-generation.database.action con el valor drop-and-create indica que, al iniciar la aplicación, Hibernate eliminará las tablas existentes y las recreará automáticamente a partir de las entidades definidas.</p>
+<p>La configuración de drop-and-create en entornos de prueba y desarrollo tiene varias utilidades importantes que facilitan el trabajo de los desarrolladores y el proceso de prueba de las aplicaciones:</p>
+
+- Reinicialización Rápida del Entorno de Pruebas
+- Facilita el Desarrollo Ágil
+- Automatización de la Carga de Datos Iniciales
+- Pruebas de Integración con Datos Conocidos
+- Simplificación del Ciclo de Vida del Desarrollo
+
+<h2>persistence.xml</h2>
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+    <persistence-unit name="ejemploJPA" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>org.CCristian.hibernateapp.entity.Cliente</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+
+            ...
+
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
+
+Para configurar la generación automática de tablas con `drop-and-create` en JPA, el archivo `persistence.xml` está configurado para este propósito. La propiedad `jakarta.persistence.schema-generation.database.action` con el valor `drop-and-create` indica que, al iniciar la aplicación, Hibernate eliminará las tablas existentes y las recreará automáticamente a partir de las entidades definidas.
+
+<h3>Explicación de la Configuración: persistence.xml</h3>
+
+- La propiedad `<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>` indica a Hibernate que elimine las tablas (si existen) y las recree cada vez que la aplicación se ejecute. Esto es útil en entornos de desarrollo o pruebas donde los cambios en la estructura de la base de datos son frecuentes.
+- `<class>org.CCristian.hibernateapp.entity.Cliente</class>` especifica la entidad `Cliente` como una clase mapeada. Es importante que todas las clases de entidad que se deseen incluir estén listadas o que `exclude-unlisted-classes` se configure como false.
+
+
+<h2>import.sql</h2>
+
+```sql
+INSERT INTO clientes (id, nombre, apellido, forma_pago, creado_en, editado_en) VALUES (1,'Cristian','Cristaldo','debito',NULL,NULL), (2,'Andres','Guzman','debito',NULL,NULL), (3,'John','Doe','credito',NULL,NULL), (5,'Pepa','Doe','credito',NULL,NULL), (6,'Nilson','Orrego','paypal',NULL,NULL), (7,'Luna','Garcia','debito',NULL,NULL), (10,'John','Roe','paypal',NULL,NULL), (11,'Lou','Loe','paypal',NULL,NULL), (12,'Lalo','Mena','webpay','2024-10-21 15:42:01','2024-10-21 15:43:24'), (13,'Pia','Perez','paypal plus','2024-10-21 15:57:42','2024-10-21 15:59:02');
+```
+
+<h3>Explicación de la Configuración: import.sql</h3>
+
+- El archivo `import.sql` se utiliza para insertar datos iniciales en la base de datos. Al utilizar `drop-and-create`, Hibernate ejecutará este archivo automáticamente después de crear las tablas.
+- El contenido del archivo incluye sentencias `INSERT INTO` para agregar registros a la tabla `clientes`.
+
+<h2>Consideraciones</h2>
+
+- La configuración de `drop-and-create` es adecuada para desarrollo, pero no se recomienda para entornos de producción, ya que elimina los datos existentes cada vez que se reinicia la aplicación.
+- Para evitar la pérdida de datos en producción, se podría utilizar `create`, `update`, o `validate` como valores de `jakarta.persistence.schema-generation.database.action.`
