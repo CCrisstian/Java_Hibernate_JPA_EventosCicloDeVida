@@ -95,3 +95,5 @@ INSERT INTO clientes (id, nombre, apellido, forma_pago, creado_en, editado_en) V
 
 - La configuración de `drop-and-create` es adecuada para desarrollo, pero no se recomienda para entornos de producción, ya que elimina los datos existentes cada vez que se reinicia la aplicación.
 - Para evitar la pérdida de datos en producción, se podría utilizar `create`, `update`, o `validate` como valores de `jakarta.persistence.schema-generation.database.action.`
+
+Con esta configuración, al iniciar la aplicación, Hibernate generará las tablas a partir de la entidad `Cliente`, eliminará las tablas existentes (si las hay), y ejecutará el archivo `import.sql` para insertar los datos especificados.
